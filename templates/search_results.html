@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='view.css')}}" />
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <style>
+        .table-container {
+            margin-top: 40px;
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        td {
+            padding: 8px; /* You can adjust the padding value */
+        }
+
+        .btn-bold {
+            font-weight: bold;
+        }
+
+        .fw-bold {
+            font-weight: bold !important;
+        }
+
+        .btn-outline-warning:hover {
+            color: #fff;
+        }
+
+        .btn-outline-light:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <a class="navbar-brand fw-bold" href="#">SIMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100 d-flex justify-content-around">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ url_for('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ url_for('add_student') }}">Add Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{{ url_for('view_students') }}">View Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light fw-bold" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+                <!-- Add other navigation links as needed -->
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid mt-4">
+        <h2 class="fw-bold bg-warning p-3">Search Results for "{{ search_query }}"</h2>
+
+        <!-- Display Search Results -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Middle Name</th>
+                    <th>Date of Birth</th>
+                    <th>Gender</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Emergency Contact</th>
+                    <th>Action</th>
+                    <!-- Add other headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% if searched_students %}
+                    {% for student in searched_students %}
+                        <tr>
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.first_name }}</td>
+                            <td>{{ student.last_name }}</td>
+                            <td>{{ student.middle_name }}</td>
+                            <td>{{ student.date_of_birth }}</td>
+                            <td>{{ student.gender }}</td>
+                            <td>{{ student.phone_number }}</td>
+                            <td>{{ student.address }}</td>
+                            <td>{{ student.emergency_contact }}</td>
+                            <td>
+                                <a class="btn btn-outline-warning fw-bold" href="/edit_student/{{ student.id }}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="10">
+                            <p class="text-center">{{ no_results_message }}</p>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

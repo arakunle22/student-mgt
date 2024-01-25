@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student Information</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .card {
+            margin-top: 50px;
+            animation: fadeInUp 1s ease;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+    
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+  
+        .btn-bold {
+            font-weight: bold;
+        }
+  
+        .fw-bold {
+            font-weight: bold !important;
+        }
+  
+        .btn-outline-light:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <a class="navbar-brand fw-bold" href="#">SIMS</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav w-100 d-flex justify-content-around">
+                <li class="nav-item">
+                    <a class="nav-link  fw-bold" href="{{ url_for('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  fw-bold" href="{{ url_for('add_student') }}">Add Student</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  fw-bold" href="{{ url_for('view_students') }}">View Students</a>
+                </li>
+  
+                <li class="nav-item">
+                    <a class="btn btn-outline-light fw-bold" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+                <!-- Add other navigation links as needed -->
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2 class="bg-warning p-3 fw-bold text-white">Edit Student ID: {{ academic_info.student_id }} Academic Information</h2>
+
+        <form class="form" method="post">
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" value="{{ academic_info.department }}" class="form-control" required>
+            </div>
+            
+            <!-- Add input fields for each subject -->
+            {% for subject in ['Mathematics', 'English', 'Chemistry', 'Physics', 'Biology', 'Computer', 'Commerce', 'Acccounting', 'Literature', 'Government', 'Economic'] %}
+                <div class="form-group">
+                    <label for="{{ subject }}">{{ subject }}:</label>
+                    <input type="number" id="{{ subject }}" name="{{ subject }}" value="{{ academic_info[subject] }}" class="form-control">
+                </div>
+            {% endfor %}
+            <!-- Add input fields for other subjects -->
+            
+            <div class="form-group">
+                <label for="year_grade">Year/Grade:</label>
+                <input type="number" id="year_grade" name="year_grade" value="{{ academic_info.year_grade }}" class="form-control" required>
+            </div>
+            <!-- Include other fields here for class attendance, payments, absence, tardiness, etc. -->
+
+            <!-- Add other fields and pre-fill with existing data -->
+            <input type="submit" value="Update" class="btn btn-outline-danger fw-bold mt-3 mb-5 btn-block" />
+        </form>
+    </div>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="your_bootstrap_js_url"></script>
+</body>
+</html>
